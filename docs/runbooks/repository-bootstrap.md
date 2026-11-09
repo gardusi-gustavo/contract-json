@@ -10,7 +10,7 @@ Status: **staged locally**. GitHub-side rulesets are applied after the mirror ex
 
 ```json
 {
-  "repository": "gardusi-gustavo/package-json",
+  "repository": "gardusi-gustavo/contract-json",
   "default_branch": "main",
   "required_approvals": 1,
   "squash_merge": true,

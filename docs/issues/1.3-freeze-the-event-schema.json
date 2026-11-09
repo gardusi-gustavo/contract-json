@@ -8,7 +8,7 @@
   },
   "spec": {
     "summary": "Review events/dataset-updated.schema.json.",
-    "expected_outcome": "The event matches package-proto.",
+    "expected_outcome": "The event matches contract-proto.",
     "acceptance_criteria": [
       "Fields match proto",
       "Example validates"

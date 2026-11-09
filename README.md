@@ -1,4 +1,4 @@
-# package-json
+# contract-json
 
 Pure JSON Schema contract registry.
 

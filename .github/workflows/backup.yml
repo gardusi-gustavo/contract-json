@@ -12,6 +12,6 @@ jobs:
   backup:
     uses: gardusi-gustavo/workflow-devops/.github/workflows/backup.yml@v0.1.0
     with:
-      repository: gardusi-gustavo/package-json
+      repository: gardusi-gustavo/contract-json
       retention: 3
     secrets: inherit

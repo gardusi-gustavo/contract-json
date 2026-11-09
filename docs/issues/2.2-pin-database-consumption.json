@@ -7,7 +7,7 @@
     "max_file_changes": 4
   },
   "spec": {
-    "summary": "Document and test the pinned package-json tag.",
+    "summary": "Document and test the pinned contract-json tag.",
     "expected_outcome": "Database validates against a pinned tag.",
     "acceptance_criteria": [
       "Lock file is documented",

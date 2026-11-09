@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "name": "package-json",
+  "name": "contract-json",
   "organization": "gardusi-gustavo",
   "layer": 2,
   "kind": "contract",
