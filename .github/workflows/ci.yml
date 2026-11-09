@@ -8,6 +8,6 @@ permissions:
   contents: read
 jobs:
   ci:
-    uses: gardusi-gustavo/devops/.github/workflows/ci-python.yml@v0.1.0
+    uses: gardusi-gustavo/workflow-devops/.github/workflows/ci-python.yml@v0.1.0
     with:
       command: bash infra/scripts/ci.sh
