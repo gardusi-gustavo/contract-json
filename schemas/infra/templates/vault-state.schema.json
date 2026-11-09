@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/vault-state.schema.json",
+  "title": "VaultState",
+  "description": "Public-safe vault state snapshot. Paths and porn rows live in the private overlay.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_at",
+    "scope",
+    "counts",
+    "items",
+    "tickets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private",
+        "all"
+      ]
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "public_items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "private_items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "by_domain": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "by_status": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "by_stage": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "normalized": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "card": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "./vault-item.schema.json"
+      }
+    },
+    "tickets": {
+      "type": "array",
+      "items": {
+        "$ref": "./vault-ticket.schema.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

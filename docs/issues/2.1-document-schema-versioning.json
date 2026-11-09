@@ -1,0 +1,18 @@
+{
+  "rank": "2.1",
+  "title": "Document schema versioning",
+  "context": "Versioning is only implied.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Write the policy and examples.",
+    "expected_outcome": "A contributor knows when to cut a version.",
+    "acceptance_criteria": [
+      "Policy is explicit",
+      "Example is included"
+    ]
+  },
+  "attempts": []
+}

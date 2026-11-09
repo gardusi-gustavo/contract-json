@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wiki.local/schema/playlist.schema.json",
+  "title": "Playlist work entry",
+  "type": "array",
+  "items": { "$ref": "#/$defs/work" },
+  "$defs": {
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "domains": {
+      "type": "object",
+      "required": ["environment", "pursuit", "method", "tone"],
+      "additionalProperties": false,
+      "properties": {
+        "environment": { "type": "array", "items": { "$ref": "#/$defs/domain" }, "uniqueItems": true },
+        "pursuit": { "type": "array", "items": { "$ref": "#/$defs/domain" }, "uniqueItems": true },
+        "method": { "type": "array", "items": { "$ref": "#/$defs/domain" }, "uniqueItems": true },
+        "tone": { "type": "array", "items": { "$ref": "#/$defs/domain" }, "uniqueItems": true },
+        "medium": { "type": "array", "items": { "$ref": "#/$defs/domain" }, "uniqueItems": true }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "setting": { "type": "string" },
+        "role": { "type": "string" },
+        "obsession": { "type": "string" },
+        "transformation": { "type": "string" },
+        "goal": { "type": "string" },
+        "obstacle": { "type": "string" },
+        "method": { "type": "string" },
+        "tone": { "type": "string" },
+        "final-scene": { "type": "string" }
+      }
+    },
+    "work": {
+      "type": "object",
+      "required": [
+        "schema-version",
+        "id",
+        "franchise",
+        "title",
+        "year",
+        "format",
+        "core-domain",
+        "domains",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema-version": { "const": 2 },
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "franchise": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "original-title": { "type": ["string", "null"] },
+        "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "year": { "type": ["integer", "string"] },
+        "format": { "enum": ["film", "season", "sample", "full"] },
+        "type": { "type": "string" },
+        "film-number": { "type": ["integer", "null"], "minimum": 1 },
+        "films-total": { "type": ["integer", "null"], "minimum": 1 },
+        "season": { "type": ["integer", "null"], "minimum": 0 },
+        "season-label": { "type": ["string", "null"] },
+        "episodes": { "type": ["integer", "null"], "minimum": 1 },
+        "episode-minutes": { "type": ["integer", "null"], "minimum": 1 },
+        "runtime-minutes": { "type": ["integer", "null"], "minimum": 1 },
+        "core-domain": { "$ref": "#/$defs/domain" },
+        "core-reason": { "type": "string" },
+        "domains": { "$ref": "#/$defs/domains" },
+        "signals": { "$ref": "#/$defs/signals" },
+        "content-warnings": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "original-language": { "type": ["string", "null"] },
+        "country": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "region": { "type": "string" },
+        "rating": { "type": "string" },
+        "rating-source": { "type": "string" },
+        "verdict": { "type": "string" },
+        "status": { "enum": ["🟢", "🟡", "🔴"] },
+        "external-ids": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "added": { "type": "string", "format": "date" },
+        "updated": { "type": "string", "format": "date" },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "format": { "const": "film" } }, "required": ["format"] },
+          "then": { "required": ["runtime-minutes"] }
+        }
+      ]
+    }
+  }
+}

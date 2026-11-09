@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/vault/media-profile.schema.json",
+  "title": "MediaProfile",
+  "description": "A named video/audio encoding profile used by vault.transform and vault.verify.",
+  "type": "object",
+  "required": [
+    "id",
+    "resolution",
+    "video_codec",
+    "audio_codec",
+    "target_bitrate",
+    "container",
+    "pix_fmt",
+    "max_short_side",
+    "max_fps",
+    "audio_channels",
+    "audio_language",
+    "subtitles",
+    "title_tag",
+    "crf",
+    "bufsize"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" },
+    "resolution": { "type": "string", "pattern": "^\\d+p$" },
+    "video_codec": { "type": "string", "enum": ["libx264", "libx265", "vp9"] },
+    "audio_codec": { "type": "string", "enum": ["aac", "opus", "mp3"] },
+    "target_bitrate": { "type": "string", "minLength": 1 },
+    "container": { "type": "string", "enum": ["mkv", "mp4"] },
+    "pix_fmt": { "type": "string", "minLength": 1 },
+    "max_short_side": { "type": "integer", "minimum": 1 },
+    "max_fps": { "type": "number", "minimum": 1 },
+    "audio_channels": { "type": "integer", "minimum": 1 },
+    "audio_language": { "type": "string", "minLength": 1 },
+    "subtitles": { "type": "boolean" },
+    "title_tag": { "type": "boolean" },
+    "crf": { "type": "integer", "minimum": 0, "maximum": 51 },
+    "bufsize": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

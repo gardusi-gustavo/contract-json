@@ -1,0 +1,18 @@
+{
+  "rank": "2.2",
+  "title": "Pin database consumption",
+  "context": "Database still reads local schema copies.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Document and test the pinned package-json tag.",
+    "expected_outcome": "Database validates against a pinned tag.",
+    "acceptance_criteria": [
+      "Lock file is documented",
+      "CI rejects unpinned tags"
+    ]
+  },
+  "attempts": []
+}

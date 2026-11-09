@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/vault/collections.schema.json",
+  "title": "VaultCollections",
+  "description": "Typed collection wrappers exchanged between vault steps.",
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": ["public", "private", "all"]
+    },
+    "itemInputList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemInput" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemClassifiedList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemClassified" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemProcessingList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemProcessing" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemReadyList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemReady" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemVerifiedList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemVerified" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemPublishedList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemPublished" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemOnCardList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemOnCard" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemRepairingList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemRepairing" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemBlockedList": {
+      "type": "object",
+      "required": ["scope", "count", "items"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/itemBlocked" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "planActionList": {
+      "type": "object",
+      "required": ["scope", "count", "actions"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "count": { "type": "integer", "minimum": 0 },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "./objects.schema.json#/$defs/planAction" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

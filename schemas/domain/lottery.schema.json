@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lottery draw dataset",
+  "type": "object",
+  "required": [
+    "schema",
+    "domain",
+    "date",
+    "generated_at",
+    "source",
+    "items"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "domain": {
+      "const": "lottery"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

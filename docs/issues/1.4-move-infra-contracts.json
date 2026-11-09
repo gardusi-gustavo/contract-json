@@ -1,0 +1,18 @@
+{
+  "rank": "1.4",
+  "title": "Move infra contracts",
+  "context": "Repo, issue, archive, workflow, and backup schemas are spread out.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Collect infra schemas under schemas/infra/.",
+    "expected_outcome": "Devops and database consume one registry.",
+    "acceptance_criteria": [
+      "Archive schema is present",
+      "Issue-task schema is present"
+    ]
+  },
+  "attempts": []
+}

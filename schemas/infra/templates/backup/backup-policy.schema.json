@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/backup/backup-policy.schema.json",
+  "title": "BackupPolicy",
+  "description": "The canonical backup policy consumed by the backup workflow.",
+  "type": "object",
+  "required": [
+    "schema",
+    "mode",
+    "primary_dir",
+    "mirror_dirs",
+    "password_file",
+    "data_dir",
+    "retention",
+    "lock_file",
+    "mirror_mode",
+    "status_dir"
+  ],
+  "properties": {
+    "schema": {
+      "type": "integer",
+      "const": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "gitea-dump"
+      ]
+    },
+    "primary_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mirror_dirs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "password_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gitea_uid": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "gitea_gid": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "quiesce": {
+      "type": "boolean"
+    },
+    "encrypt": {
+      "type": "boolean"
+    },
+    "name_template": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retention": {
+      "type": "object",
+      "required": [
+        "max_bytes",
+        "reserve_bytes",
+        "minimum_valid_archives",
+        "prune",
+        "preserve_newest_validated"
+      ],
+      "properties": {
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reserve_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimum_valid_archives": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prune": {
+          "type": "string",
+          "enum": [
+            "oldest_first"
+          ]
+        },
+        "preserve_newest_validated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lock_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mirror_mode": {
+      "type": "string",
+      "enum": [
+        "required",
+        "optional"
+      ]
+    },
+    "status_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "max_age_hours": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": false
+}

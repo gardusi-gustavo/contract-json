@@ -1,0 +1,18 @@
+{
+  "rank": "1.6",
+  "title": "Add a validation CLI",
+  "context": "Consumers need one command to validate payloads.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Ship a small validation entrypoint.",
+    "expected_outcome": "A payload can be validated against a named schema.",
+    "acceptance_criteria": [
+      "CLI is documented",
+      "Exit codes are stable"
+    ]
+  },
+  "attempts": []
+}

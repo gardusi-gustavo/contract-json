@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/vault-item.schema.json",
+  "title": "VaultItem",
+  "description": "One media item in the local store and on a physical card. Card paths, caps, and sync live in gardusi-gustavo/private/docs/offline/.",
+  "type": "object",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{7,63}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "video",
+        "audio",
+        "docs",
+        "games",
+        "books",
+        "music",
+        "porn",
+        "aggregate"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "input",
+        "processing",
+        "ready",
+        "on_card",
+        "published",
+        "repairing",
+        "blocked",
+        "review",
+        "dupes",
+        "quarantine"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "green",
+        "yellow",
+        "red"
+      ]
+    },
+    "sizeBytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "presence": {
+      "type": "object",
+      "required": [
+        "store",
+        "card"
+      ],
+      "properties": {
+        "store": {
+          "type": "boolean"
+        },
+        "card": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ticketId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "failureClass": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "domain",
+        "stage",
+        "status",
+        "size_bytes",
+        "presence"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/title"
+        },
+        "domain": {
+          "$ref": "#/$defs/domain"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "size_bytes": {
+          "$ref": "#/$defs/sizeBytes"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "presence": {
+          "$ref": "#/$defs/presence"
+        },
+        "ticket_id": {
+          "$ref": "#/$defs/ticketId"
+        },
+        "reason": {
+          "$ref": "#/$defs/reason"
+        },
+        "failure_class": {
+          "$ref": "#/$defs/failureClass"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/common"
+    }
+  ],
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/vault-ticket.schema.json",
+  "title": "VaultTicket",
+  "description": "A saved selector over vault items plus the step that processes them.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "selector",
+    "step",
+    "limits",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,63}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selector": {
+      "type": "object",
+      "required": [
+        "domain",
+        "stage"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": [
+            "video",
+            "audio",
+            "docs",
+            "games",
+            "books",
+            "music",
+            "porn",
+            "aggregate"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "input",
+            "processing",
+            "ready",
+            "on_card",
+            "published",
+            "repairing",
+            "blocked",
+            "review",
+            "dupes",
+            "quarantine"
+          ]
+        },
+        "ticket_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "green",
+            "yellow",
+            "red"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limits": {
+      "type": "object",
+      "required": [
+        "max_items"
+      ],
+      "properties": {
+        "max_items": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "active",
+        "blocked",
+        "done"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

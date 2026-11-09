@@ -1,0 +1,18 @@
+{
+  "rank": "1.3",
+  "title": "Freeze the event schema",
+  "context": "The dataset-updated event is the first event contract.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Review events/dataset-updated.schema.json.",
+    "expected_outcome": "The event matches package-proto.",
+    "acceptance_criteria": [
+      "Fields match proto",
+      "Example validates"
+    ]
+  },
+  "attempts": []
+}

@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitea.localhost/templates/json/src/branch/main/schemas/repo.schema.json",
+  "title": "Repository contract",
+  "type": "object",
+  "required": [
+    "schema",
+    "name",
+    "organization",
+    "layer",
+    "depends_on",
+    "consumers",
+    "data_classification",
+    "visibility",
+    "dependencies"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "organization": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "layer": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+/[a-z0-9-]+$"
+      },
+      "uniqueItems": true
+    },
+    "consumers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "data_classification": {
+      "enum": [
+        "public",
+        "private",
+        "personal",
+        "secret"
+      ]
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "limited",
+        "private"
+      ]
+    },
+    "template": {
+      "type": "object",
+      "description": "Deprecated. Use dependencies.",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "version": {
+          "deprecated": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "publish": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "npm",
+          "pypi",
+          "crates",
+          "docker",
+          "nuget",
+          "go",
+          "maven",
+          "gem",
+          "composer"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "hubs": {
+      "type": "object",
+      "properties": {
+        "practice": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "automation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ci": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "enum": [
+            "universal",
+            "base",
+            "python",
+            "node",
+            "go",
+            "rust",
+            "cpp",
+            "java",
+            "media",
+            "dotnet",
+            "ruby",
+            "php"
+          ]
+        },
+        "dockerfile": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        },
+        "timeout_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "required_jobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "primary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "features": {
+      "type": "object"
+    },
+    "limits": {
+      "type": "object"
+    },
+    "release": {
+      "type": "object"
+    },
+    "files": {
+      "type": "object"
+    },
+    "dependencies": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+/[a-z0-9-]+$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^v?[0-9]+\\.[0-9]+\\.[0-9]+$"
+      }
+    }
+  },
+  "additionalProperties": true
+}

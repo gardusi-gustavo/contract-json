@@ -1,0 +1,708 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://gitea.localhost:3001/templates/json/raw/branch/main/schemas/backup/objects.schema.json",
+  "title": "BackupObjects",
+  "description": "Typed objects exchanged between backup workflow steps.",
+  "$defs": {
+    "lockRequest": {
+      "type": "object",
+      "required": [
+        "lock_file",
+        "mode"
+      ],
+      "properties": {
+        "lock_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "scheduled"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "lockHandle": {
+      "type": "object",
+      "required": [
+        "lock_file",
+        "acquired_at",
+        "holder"
+      ],
+      "properties": {
+        "lock_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acquired_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "holder": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "destinationPlan": {
+      "type": "object",
+      "required": [
+        "path",
+        "required",
+        "mode",
+        "free_bytes",
+        "capacity_bytes",
+        "writable"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "mirror"
+          ]
+        },
+        "free_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "capacity_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writable": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupPlan": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "archive_estimate_bytes",
+        "reserve_bytes",
+        "destinations"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_estimate_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reserve_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "destinations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/destinationPlan"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "serviceRef": {
+      "type": "object",
+      "required": [
+        "name",
+        "data_dir"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_dir": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "serviceState": {
+      "type": "object",
+      "required": [
+        "name",
+        "state",
+        "changed_at"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "running",
+            "stopped"
+          ]
+        },
+        "changed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dumpRequest": {
+      "type": "object",
+      "required": [
+        "data_dir",
+        "uid",
+        "gid",
+        "out_dir"
+      ],
+      "properties": {
+        "data_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "out_dir": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupDump": {
+      "type": "object",
+      "required": [
+        "dump_dir",
+        "gitea_version",
+        "manifest",
+        "started_at",
+        "finished_at"
+      ],
+      "properties": {
+        "dump_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gitea_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manifest": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupValidation": {
+      "type": "object",
+      "required": [
+        "sqlite_integrity",
+        "table_counts",
+        "git_fsck",
+        "errors"
+      ],
+      "properties": {
+        "sqlite_integrity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "table_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "git_fsck": {
+          "type": "string",
+          "minLength": 1
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupManifest": {
+      "type": "object",
+      "required": [
+        "manifest_path",
+        "sha256"
+      ],
+      "properties": {
+        "manifest_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupArchive": {
+      "type": "object",
+      "required": [
+        "archive_path",
+        "sha256",
+        "size_bytes",
+        "created_at"
+      ],
+      "properties": {
+        "archive_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupCopyInput": {
+      "type": "object",
+      "required": [
+        "archive_path",
+        "sha256",
+        "destination",
+        "final_path"
+      ],
+      "properties": {
+        "archive_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "destination": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_path": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupCopy": {
+      "type": "object",
+      "required": [
+        "destination",
+        "temp_path",
+        "final_path",
+        "sha256",
+        "verified",
+        "published"
+      ],
+      "properties": {
+        "destination": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temp_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "published": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reconcileReport": {
+      "type": "object",
+      "required": [
+        "missing",
+        "copied",
+        "errors"
+      ],
+      "properties": {
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "copied": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupPrune": {
+      "type": "object",
+      "required": [
+        "destination",
+        "kept",
+        "pruned",
+        "freed_bytes",
+        "under_budget",
+        "minimum_met"
+      ],
+      "properties": {
+        "destination": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kept": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "pruned": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "freed_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "under_budget": {
+          "type": "boolean"
+        },
+        "minimum_met": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupRunResult": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "result",
+        "archive",
+        "failed_step",
+        "error",
+        "destinations"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "failed",
+            "degraded"
+          ]
+        },
+        "archive": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "failed_step": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "destinations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "backupStatus": {
+      "type": "object",
+      "required": [
+        "result",
+        "mode",
+        "archive",
+        "size_bytes",
+        "size_baseline_bytes",
+        "size_warning",
+        "destinations",
+        "checks",
+        "started_at",
+        "finished_at"
+      ],
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "failed",
+            "degraded"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "scheduled"
+          ]
+        },
+        "archive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size_baseline_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size_warning": {
+          "type": "boolean"
+        },
+        "destinations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "secretRef": {
+      "type": "object",
+      "required": [
+        "name",
+        "source",
+        "scope",
+        "rotation_days"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "env",
+            "file",
+            "gitea-secret"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rotation_days": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "manifestInput": {
+      "type": "object",
+      "required": [
+        "dump",
+        "validation"
+      ],
+      "properties": {
+        "dump": {
+          "$ref": "#/$defs/backupDump"
+        },
+        "validation": {
+          "$ref": "#/$defs/backupValidation"
+        }
+      },
+      "additionalProperties": false
+    },
+    "archiveInput": {
+      "type": "object",
+      "required": [
+        "manifest",
+        "secret"
+      ],
+      "properties": {
+        "manifest": {
+          "$ref": "#/$defs/backupManifest"
+        },
+        "secret": {
+          "$ref": "#/$defs/secretRef"
+        }
+      },
+      "additionalProperties": false
+    },
+    "testInput": {
+      "type": "object",
+      "required": [
+        "archive",
+        "secret"
+      ],
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/backupArchive"
+        },
+        "secret": {
+          "$ref": "#/$defs/secretRef"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reconcileInput": {
+      "type": "object",
+      "required": [
+        "archive",
+        "mirror"
+      ],
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/backupArchive"
+        },
+        "mirror": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "pruneInput": {
+      "type": "object",
+      "required": [
+        "destination",
+        "archive",
+        "retention"
+      ],
+      "properties": {
+        "destination": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive": {
+          "$ref": "#/$defs/backupArchive"
+        },
+        "retention": {
+          "type": "object",
+          "required": [
+            "max_bytes",
+            "reserve_bytes",
+            "minimum_valid_archives",
+            "preserve_newest_validated"
+          ],
+          "properties": {
+            "max_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reserve_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minimum_valid_archives": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "preserve_newest_validated": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

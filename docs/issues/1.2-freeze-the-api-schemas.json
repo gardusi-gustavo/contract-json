@@ -1,0 +1,18 @@
+{
+  "rank": "1.2",
+  "title": "Freeze the API schemas",
+  "context": "The API envelope, error, and pagination contracts are new.",
+  "limits": {
+    "max_commits": 5,
+    "max_file_changes": 4
+  },
+  "spec": {
+    "summary": "Review the api/ schemas.",
+    "expected_outcome": "Services can share one HTTP boundary.",
+    "acceptance_criteria": [
+      "Envelope is documented",
+      "Error shape is stable"
+    ]
+  },
+  "attempts": []
+}
