@@ -1,25 +1,24 @@
 {
-  "schema": 1,
-  "mode": "gitea-dump",
-  "primary_dir": "/srv/backup/gitea-dumps",
+  "schema": 2,
+  "mode": "git-bundles",
+  "primary_dir": "/srv/backup/git-bundles",
+  "retired_dir": "/srv/backup/git-bundles-retired",
   "password_file": "/srv/backup/secrets/backup.pass",
-  "data_dir": "/srv/gitea/data",
-  "gitea_uid": 1003,
-  "gitea_gid": 1003,
-  "quiesce": true,
-  "encrypt": true,
-  "name_template": "gitea-%Y%m%dT%H%M%SZ",
-  "retention": {
-    "max_bytes": 5368709120,
-    "reserve_bytes": 536870912,
-    "minimum_valid_archives": 5,
-    "prune": "oldest_first",
-    "preserve_newest_validated": true
-  },
-  "lock_file": "/run/lock/gitea-backup.lock",
-  "mirror_mode": "required",
+  "snapshots": 5,
+  "tags": "forever",
+  "private": "encrypted",
   "status_dir": "/srv/backup/status",
-  "max_age_hours": 27,
-  "device_config": "/srv/gitea/tooling/offline-devices.json",
-  "vault_backup_subdir": "0-library/backup/gitea-dumps"
+  "device_config": "/home/user/repos/human/private/infra/config/offline-devices.json",
+  "vault_backup_subdir": "0-library/backup/git-bundles",
+  "metadata": {
+    "gitea_dir": "/srv/backup/gitea-metadata",
+    "github_dir": "/srv/backup/github-metadata",
+    "mirror_subdir": "0-library/backup/metadata-exports"
+  },
+  "legacy_gitea_dump": {
+    "enabled": false,
+    "path": "/srv/backup/gitea-dumps-final/gitea-20261108T224647Z.7z",
+    "sha256": "7b4ac8085db8734e879a9772b6201874f16ebbe3f8fc01d817151372626ed0ab",
+    "note": "Final local cold copy. The scheduled Gitea dump timers are disabled."
+  }
 }
