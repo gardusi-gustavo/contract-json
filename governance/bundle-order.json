@@ -12,7 +12,6 @@
       "name": "contracts",
       "repos": [
         "gardusi-gustavo/contract-json",
-        "gardusi-gustavo/contract-sql",
         "gardusi-gustavo/contract-proto",
         "gardusi-gustavo/contract-graphql"
       ]
@@ -37,7 +36,10 @@
         "gardusi-gustavo/package-cdk",
         "gardusi-gustavo/package-elixir",
         "gardusi-gustavo/package-zig",
-        "gardusi-gustavo/package-swift"
+        "gardusi-gustavo/package-swift",
+        "gardusi-gustavo/package-sql",
+        "gardusi-gustavo/package-scala",
+        "gardusi-gustavo/package-md"
       ]
     },
     {

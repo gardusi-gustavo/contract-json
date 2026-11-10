@@ -39,18 +39,6 @@
     },
     {
       "group": "gardusi-gustavo",
-      "name": "contract-sql",
-      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/contract-sql.git",
-      "section": 1,
-      "visibility": "public",
-      "platform": [
-        "gitea",
-        "github"
-      ],
-      "github": "gardusi-gustavo/contract-sql"
-    },
-    {
-      "group": "gardusi-gustavo",
       "name": "dashboard-devops",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/dashboard-devops.git",
       "section": 6,
@@ -303,6 +291,18 @@
     },
     {
       "group": "gardusi-gustavo",
+      "name": "package-md",
+      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-md.git",
+      "section": 2,
+      "visibility": "public",
+      "platform": [
+        "gitea",
+        "github"
+      ],
+      "github": "gardusi-gustavo/package-md"
+    },
+    {
+      "group": "gardusi-gustavo",
       "name": "package-php",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-php.git",
       "section": 2,
@@ -351,6 +351,18 @@
     },
     {
       "group": "gardusi-gustavo",
+      "name": "package-scala",
+      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-scala.git",
+      "section": 2,
+      "visibility": "public",
+      "platform": [
+        "gitea",
+        "github"
+      ],
+      "github": "gardusi-gustavo/package-scala"
+    },
+    {
+      "group": "gardusi-gustavo",
       "name": "package-sh",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-sh.git",
       "section": 2,
@@ -360,6 +372,18 @@
         "github"
       ],
       "github": "gardusi-gustavo/package-sh"
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "package-sql",
+      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-sql.git",
+      "section": 2,
+      "visibility": "public",
+      "platform": [
+        "gitea",
+        "github"
+      ],
+      "github": "gardusi-gustavo/package-sql"
     },
     {
       "group": "gardusi-gustavo",
@@ -435,18 +459,6 @@
     },
     {
       "group": "gardusi-gustavo",
-      "name": "workflow-manual",
-      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/workflow-manual.git",
-      "section": 3,
-      "visibility": "public",
-      "platform": [
-        "gitea",
-        "github"
-      ],
-      "github": "gardusi-gustavo/workflow-manual"
-    },
-    {
-      "group": "gardusi-gustavo",
       "name": "workflow-event",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/workflow-event.git",
       "section": 3,
@@ -456,6 +468,18 @@
         "github"
       ],
       "github": "gardusi-gustavo/workflow-event"
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "workflow-manual",
+      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/workflow-manual.git",
+      "section": 3,
+      "visibility": "public",
+      "platform": [
+        "gitea",
+        "github"
+      ],
+      "github": "gardusi-gustavo/workflow-manual"
     },
     {
       "group": "gardusi-gustavo",
@@ -494,5 +518,5 @@
       "git_path": null
     }
   ],
-  "total": 41
+  "total": 43
 }
