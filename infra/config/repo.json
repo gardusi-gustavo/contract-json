@@ -187,12 +187,18 @@
         "allow_names": [
           "README.md"
         ]
+      },
+      "governance/": {
+        "allow_extensions": [
+          ".json",
+          ".md"
+        ]
       }
     },
     "forbid": [
       {
         "regex": "(^|/)[^/]*\\.md$",
-        "reason": "Markdown is allowed only in docs/, .gitea/, .github/, README.md, and AGENTS.md",
+        "reason": "Markdown is allowed only in docs/, schemas/, governance/, .gitea/, .github/, README.md, and AGENTS.md",
         "allow": [
           "^README\\.md$",
           "^AGENTS\\.md$",
@@ -200,7 +206,8 @@
           "^schemas/",
           "^sql/",
           "^\\.gitea/",
-          "^\\.github/"
+          "^\\.github/",
+          "^governance/"
         ]
       },
       {

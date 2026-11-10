@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "tiers": [
+    {
+      "name": "meta",
+      "repos": [
+        "gardusi-gustavo/gardusi-gustavo",
+        "gardusi-gustavo/.github"
+      ]
+    },
+    {
+      "name": "contracts",
+      "repos": [
+        "gardusi-gustavo/contract-json",
+        "gardusi-gustavo/contract-sql",
+        "gardusi-gustavo/contract-proto",
+        "gardusi-gustavo/contract-graphql"
+      ]
+    },
+    {
+      "name": "packages",
+      "repos": [
+        "gardusi-gustavo/package-sh",
+        "gardusi-gustavo/package-docker",
+        "gardusi-gustavo/package-python",
+        "gardusi-gustavo/package-cpp",
+        "gardusi-gustavo/package-ts",
+        "gardusi-gustavo/package-rs",
+        "gardusi-gustavo/package-go",
+        "gardusi-gustavo/package-java",
+        "gardusi-gustavo/package-kotlin",
+        "gardusi-gustavo/package-cs",
+        "gardusi-gustavo/package-php",
+        "gardusi-gustavo/package-rb",
+        "gardusi-gustavo/package-ui",
+        "gardusi-gustavo/package-terraform",
+        "gardusi-gustavo/package-cdk",
+        "gardusi-gustavo/package-elixir",
+        "gardusi-gustavo/package-zig",
+        "gardusi-gustavo/package-swift"
+      ]
+    },
+    {
+      "name": "workflows",
+      "repos": [
+        "gardusi-gustavo/workflow-event",
+        "gardusi-gustavo/workflow-scheduled",
+        "gardusi-gustavo/workflow-manual"
+      ]
+    },
+    {
+      "name": "databases",
+      "repos": [
+        "gardusi-gustavo/database-lottery",
+        "gardusi-gustavo/database-news",
+        "gardusi-gustavo/database-stocks",
+        "gardusi-gustavo/database-agent",
+        "gardusi-gustavo/database-devops"
+      ]
+    },
+    {
+      "name": "games",
+      "repos": [
+        "gardusi-gustavo/game-sudoku",
+        "gardusi-gustavo/game-logic-grid",
+        "gardusi-gustavo/game-crosswords"
+      ]
+    },
+    {
+      "name": "dashboards",
+      "repos": [
+        "gardusi-gustavo/dashboard-devops",
+        "gardusi-gustavo/dashboard-news",
+        "gardusi-gustavo/dashboard-stocks",
+        "gardusi-gustavo/dashboard-lottery",
+        "gardusi-gustavo/dashboard-wiki"
+      ]
+    },
+    {
+      "name": "private",
+      "repos": [
+        "gardusi-gustavo/private"
+      ]
+    }
+  ]
+}

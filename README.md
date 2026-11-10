@@ -1,6 +1,6 @@
 # contract-json
 
-Pure JSON Schema contract registry.
+Pure JSON Schema contracts and account-level structured governance manifests.
 
 ## Layout
 
@@ -8,6 +8,7 @@ Pure JSON Schema contract registry.
 | `schemas/api/` | API envelopes |
 | `schemas/events/` | event payloads |
 | `schemas/infra/` | repo and workflow contracts |
+| `governance/` | inventory, policy, bundle order, rulesets, and archive history |
 
 ## Validation
 
