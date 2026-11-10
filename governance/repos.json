@@ -99,18 +99,6 @@
     },
     {
       "group": "gardusi-gustavo",
-      "name": "database-agent",
-      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/database-agent.git",
-      "section": 4,
-      "visibility": "public",
-      "platform": [
-        "gitea",
-        "github"
-      ],
-      "github": "gardusi-gustavo/database-agent"
-    },
-    {
-      "group": "gardusi-gustavo",
       "name": "database-devops",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/database-devops.git",
       "section": 4,
@@ -192,18 +180,6 @@
         "github"
       ],
       "github": "gardusi-gustavo/game-sudoku"
-    },
-    {
-      "group": "gardusi-gustavo",
-      "name": "package-cdk",
-      "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-cdk.git",
-      "section": 2,
-      "visibility": "public",
-      "platform": [
-        "gitea",
-        "github"
-      ],
-      "github": "gardusi-gustavo/package-cdk"
     },
     {
       "group": "gardusi-gustavo",
@@ -375,15 +351,15 @@
     },
     {
       "group": "gardusi-gustavo",
-      "name": "package-sql",
+      "name": "contract-sql",
       "git_path": "/srv/gitea/data/git/repositories/gardusi-gustavo/package-sql.git",
-      "section": 2,
+      "section": 1,
       "visibility": "public",
       "platform": [
-        "gitea",
         "github"
       ],
-      "github": "gardusi-gustavo/package-sql"
+      "github": "gardusi-gustavo/contract-sql",
+      "gitea_archive": "gardusi-gustavo/package-sql"
     },
     {
       "group": "gardusi-gustavo",
@@ -492,6 +468,42 @@
         "github"
       ],
       "github": "gardusi-gustavo/workflow-scheduled"
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "contract-openapi",
+      "git_path": null,
+      "section": 1,
+      "visibility": "public",
+      "platform": [
+        "github"
+      ],
+      "github": "gardusi-gustavo/contract-openapi",
+      "gitea_archive": null
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "package-lua",
+      "git_path": null,
+      "section": 2,
+      "visibility": "public",
+      "platform": [
+        "github"
+      ],
+      "github": "gardusi-gustavo/package-lua",
+      "gitea_archive": null
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "database-wiki",
+      "git_path": null,
+      "section": 4,
+      "visibility": "public",
+      "platform": [
+        "github"
+      ],
+      "github": "gardusi-gustavo/database-wiki",
+      "gitea_archive": null
     }
   ],
   "meta": [
@@ -518,5 +530,23 @@
       "git_path": null
     }
   ],
-  "total": 43
+  "total": 44,
+  "retired": [
+    {
+      "group": "gardusi-gustavo",
+      "name": "database-agent",
+      "github": "gardusi-gustavo/database-agent",
+      "retired_at": "2026-11-10",
+      "reason": "Dataset and task queue retired; tasks migrated to workflow-manual issues",
+      "successor": "gardusi-gustavo/database-devops"
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "package-cdk",
+      "github": "gardusi-gustavo/package-cdk",
+      "retired_at": "2026-11-10",
+      "reason": "Infrastructure consolidated under Terraform",
+      "successor": "gardusi-gustavo/package-terraform"
+    }
+  ]
 }
