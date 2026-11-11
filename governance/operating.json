@@ -1,31 +1,29 @@
 {
-  "schema": 1,
+  "schema": 2,
   "season": "build",
   "seasons": {
     "build": {
-      "focus_min": 180,
+      "focus_min": 210,
       "review_min": 120,
-      "chat_min": 60,
+      "chat_min": 45,
+      "inbox_min": 30,
       "merged_prs": 10,
       "ai_usd": 1.0
     },
     "maintain": {
-      "focus_min": 75,
-      "review_min": 45,
+      "focus_min": 120,
+      "review_min": 60,
       "chat_min": 30,
+      "inbox_min": 15,
       "merged_prs": 3,
       "ai_usd": 0.4
     }
   },
   "inbox": {
     "source": "chat",
-    "unit": "one chat = one idea",
-    "targets": [
-      "new_issue",
-      "issue_comment",
-      "adr",
-      "discard"
-    ],
+    "repository": "gardusi-gustavo/gardusi-gustavo",
+    "unit": "one chat = one parent issue",
+    "capture_anytime": true,
     "delete_after_capture": true
   },
   "budgets": {
@@ -44,13 +42,19 @@
     "chat_min": {
       "low": 30,
       "high": 90,
-      "target": 60,
+      "target": 45,
+      "window": "day"
+    },
+    "inbox_min": {
+      "low": 15,
+      "high": 45,
+      "target": 30,
       "window": "day"
     },
     "focus_min": {
-      "low": 90,
-      "high": 270,
-      "target": 180,
+      "low": 120,
+      "high": 300,
+      "target": 210,
       "window": "day"
     },
     "merged_prs": {
@@ -67,20 +71,45 @@
     }
   },
   "queues": {
-    "open_issues": {
-      "resume": 30,
-      "pause": 40
-    },
-    "ready_prs": {
-      "low": 5,
-      "high": 15,
-      "target": 10
+    "inbox": {
+      "resume": 80,
+      "pause": 100
     },
     "per_repo": {
+      "resume": 15,
+      "pause": 20,
       "ready": 1,
-      "draft": 1
+      "drafts": 2
     }
   },
+  "scheduler": {
+    "mode": "focus",
+    "one_repo_per_run": true,
+    "stop_below": "P3",
+    "tiebreak": [
+      "priority",
+      "oldest_queued",
+      "name"
+    ],
+    "preempt": "manual_p0_only",
+    "draft_ttl_days": 7
+  },
+  "priorities": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "stages": [
+    "captured",
+    "triaged",
+    "specced",
+    "queued",
+    "generating",
+    "review",
+    "done",
+    "failed"
+  ],
   "review": {
     "minutes_per_pr": 12,
     "cooling_off_hours": 4,
@@ -94,7 +123,8 @@
       "tests",
       "rollback"
     ],
-    "merge_in_same_session": false
+    "merge_in_same_session": false,
+    "order": "repo_priority"
   },
   "flow": {
     "readability_gate": true,
@@ -105,17 +135,36 @@
       "non_goals",
       "rollback"
     ],
-    "overflow": "comment_on_existing",
-    "one_pr_one_issue": true
+    "one_pr_one_issue": true,
+    "append_only": true,
+    "max_children_per_parent": 8,
+    "fanout_unit": "repo_outcome"
+  },
+  "aging": {
+    "inbox_someday_days": 30,
+    "repo_stale_days": 60,
+    "someday_close_days": 90
   },
   "labels": {
     "source": "source:chat",
     "spec_ready": "spec:ready",
-    "parked": "parked"
+    "parked": "parked",
+    "someday": "someday",
+    "stale": "stale",
+    "focus": "focus:repo"
+  },
+  "schedule": {
+    "order": [
+      "review",
+      "ops",
+      "ideation",
+      "triage"
+    ],
+    "triage_batch": 10
   },
   "rituals": {
-    "daily": "review",
-    "weekly": "triage, close stale, band check",
-    "monthly": "restore drill, token rotation"
+    "daily": "review first, inbox at the end of the day",
+    "weekly": "triage, close stale, report oldest queued issue per repo",
+    "monthly": "restore drill, token rotation, prune someday older than 90 days"
   }
 }

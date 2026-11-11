@@ -8,136 +8,196 @@ The machine-readable form of this runbook is
 ## The loop
 
 ```text
-think in chat          one conversation = one idea
-      │
-      ├── decision  ──→ ADR (docs/decisions/)
-      ├── action    ──→ issue or comment on an existing issue
-      ├── question  ──→ answer, then delete the chat
-      └── reference ──→ docs or wiki
+think in chat                    one conversation = one parent issue
       │
       ▼
-delete the chat        the issue is the durable record
+parent issue (profile)           summary, decisions, priority
       │
       ▼
-distill                problem, evidence, acceptance, non-goals, rollback
+fan-out                          one child per repository and outcome
       │
       ▼
-generate               one small PR from a `spec:ready` issue
+spec                             problem, evidence, acceptance, non-goals, rollback
       │
       ▼
-review                 ~12 minutes, fixed checklist, cooling-off
+focus repo                       one repository at a time, highest priority first
       │
       ▼
-merge                  closes exactly one issue or thread
+1 ready + 2 draft PRs            clear that repository's queue
+      │
+      ▼
+review and merge                 ~12 minutes per PR
 ```
 
-A chat is a scratchpad, not storage. If its outcome is not actionable, a decision,
-or a reference, delete it without creating anything.
+A chat is a scratchpad, not storage. Once its summary exists as a parent issue, the
+chat is deleted. The issue is the durable record.
 
-## Routing
+## Backlog depth versus work in progress
 
-| What the chat produced | Destination | Kept |
+Two different limits, deliberately:
+
+- **Depth** is how much may wait. The inbox holds up to 100 issues; each work
+  repository holds up to 20. A low-value repository may wait indefinitely.
+- **WIP** is how much may move. Each repository has at most one ready PR and two
+  draft PRs, regardless of how large its backlog is.
+
+There are no global caps. Priority and the focus rule decide what runs, not a
+global number.
+
+## Caps
+
+| Scope | Limit |
+| --- | ---: |
+| Inbox open issues | 80 resume, 100 pause |
+| Work repository open issues | 15 resume, 20 pause |
+| Ready PRs per repository | 1 |
+| Draft PRs per repository | 2 |
+| Children per parent | 8 |
+| Draft age | 7 days |
+| `someday` age before close | 90 days |
+
+## Focus scheduling
+
+```text
+candidates = repositories with issues labelled stage:queued
+rank(repo) = (min priority, oldest queued issue, name)
+focus      = first candidate that still has a free slot
+
+fill focus: one ready PR for the top issue
+            two draft PRs for the next two issues
+stop.       no other repository is touched in this run
+```
+
+- One repository per generator run prevents a runaway across 43 repositories
+  without a global cap.
+- Focus persists until that repository has no queued issue above P3.
+- Drafts are the repository's depth-first queue: when the ready PR merges, promote
+  the oldest draft and open a new one.
+- A P0 in another repository may preempt only through the human `focus:repo`
+  label. There are no silent context switches.
+
+## Review order
+
+Ready PRs are reviewed in repository-priority order, not arrival order. Drafts do
+not enter the review queue until promoted.
+
+A repository that never rises above P3 is never generated, and that is intended.
+Starvation is allowed but visible: the weekly ritual reports the oldest queued
+issue per repository and how long each repository has waited.
+
+## Day shape
+
+Hardest first. The inbox is the pleasant task, so it goes last.
+
+| Order | Block | Time | Mode |
+| --- | --- | ---: | --- |
+| 1 | Status sweep: CI, open PRs, pick the target | 5 min | review |
+| 2 | Deep review and merge | 60 to 180 min | review |
+| 3 | Queue check: promote drafts, requeue failures | 5 to 10 min | ops |
+| 4 | Chat, thinking, capture | 30 to 90 min | ideation |
+| 5 | Inbox wrap-up | 15 to 45 min | triage |
+
+Rules:
+
+- no inbox triage before the review block; capture is allowed any time and takes
+  under two minutes, triage does not;
+- focus lock: finish a PR before opening another;
+- merge before generate: a repository with a ready PR gets no new work;
+- triage stops after a batch of 10 issues.
+
+## Modes
+
+| Mode | May do | May not do |
 | --- | --- | --- |
-| A decision worth remembering | `docs/decisions/NNNN-<slug>.md` | permanently |
-| Work with a concrete outcome | GitHub issue | until merged |
-| Context about open work | Comment on the existing issue or PR | until merged |
-| A question | Answer in the chat, then delete | no |
-| Reference material | `docs/` or the wiki | permanently |
-| Four or more ideas | One project issue with a checklist | until the project closes |
+| review | read diffs, run checks, merge | create issues, triage |
+| ops | promote drafts, retry, requeue | review code |
+| ideation | chat, capture summaries | triage, write code |
+| triage | label, fan-out, prioritize, close | write code, review |
 
-## Budgets are bands
+## Fan-out
 
-Stay between the floor and the roof. Empty is not the goal; flow is.
-
-| Resource, per day | Floor (L) | Roof (R) | Target |
-| --- | ---: | ---: | ---: |
-| AI spend | $0.50 | $1.50 | $1.00 |
-| Review | 60 min | 180 min | 120 min |
-| Chat and thinking | 30 min | 90 min | 60 min |
-| Focused work | 90 min | 270 min | 180 min |
-| Merged PRs | 5 | 15 | 10 |
-| New issues | 5 | 15 | 10 |
-
-The 12-minute unit is what makes the review band and the merge band agree:
-120 minutes divided by 10 PRs is 12, and 180 divided by 15 is also 12. A PR that
-cannot be reviewed in about 12 minutes is too large: at most 4 files, 250 changed
-lines, 5 commits.
-
-## Queues and hysteresis
-
-Caps use two thresholds so intake does not oscillate around a single number.
-
-| Open issues | Behaviour |
-| --- | --- |
-| below 30 | new issues allowed |
-| 30 to 40 | comments on existing issues only |
-| above 40 | intake paused; review and merge until back under 30 |
-
-| Ready PRs across all repositories | Behaviour |
-| --- | --- |
-| below 5 | generate and promote drafts |
-| 5 to 15 | normal |
-| above 15 | stop generating; review only |
-
-Per repository: at most one ready PR and one draft PR. Drafts are a buffer, not
-debt; a draft older than a week is a signal to close the issue.
+- The unit of work is `(repository, outcome)`, not the chat. Two outcomes in one
+  repository become two children.
+- One child produces one PR; a child never spans repositories.
+- Work that spans repositories becomes a group: shared label `group:<slug>`,
+  `depends-on` links, and order `contract → package → workflow or database →
+  dashboard or game`.
+- If the target repository is at its issue cap, the parent stays `stage:triaged`
+  with a comment `deferred: repo at cap`. Nothing is lost.
+- More than eight children means the chat was a project; split the parent.
 
 ## Readability gate
 
-No specification, no pull request. Before generation an issue must carry:
+No specification, no pull request. An issue must carry:
 
 - problem: what is wrong or missing;
-- evidence: file paths, line numbers, failing checks, or data;
+- evidence: paths, line numbers, failing checks, or data;
 - acceptance: how to tell it is done;
-- non-goals: what is explicitly out of scope;
+- non-goals: what is out of scope;
 - rollback: how to undo it.
 
-The distillation is a short comment on the issue, labelled `spec:ready`. Approving
-five lines takes seconds; reviewing an implementation built on an unstated goal
-takes hours.
+The distillation is a short comment labelled `spec:ready`. Approving five lines
+takes seconds; reviewing an implementation built on an unstated goal takes hours.
 
 ## Review protocol
 
-Fixed order, time-boxed, no exceptions:
+Fixed order, time-boxed:
 
-1. Correctness: does the diff do what the spec says?
-2. Evidence: is every claim backed by a path or a test?
-3. Scope: only the files the issue names?
-4. Tests: does CI cover the change, and did it run?
-5. Rollback: is the undo path real?
+1. correctness: does the diff do what the spec says?
+2. evidence: is every claim backed by a path or a test?
+3. scope: only the files the issue names?
+4. tests: does CI cover the change, and did it run?
+5. rollback: is the undo path real?
 
 Additional rules:
 
-- never merge in the session that generated or reviewed the PR; wait at least 4 hours;
+- never merge in the session that generated or reviewed the PR; wait at least four
+  hours;
 - one PR closes one issue or one thread;
-- a PR larger than 4 files or 250 lines goes back for splitting.
+- more than four files or 250 changed lines goes back for splitting;
+- UI work is accepted by screenshot plus a human `verdict:like` or
+  `verdict:dislike`; unit tests cover logic, not taste.
+
+## Append-only
+
+- new information is a new comment, never a rewritten body;
+- new work is a new commit on the same branch, up to five, never an amend, rebase,
+  or force-push;
+- scope grew: close the PR and split the issue;
+- failed: comment with logs and label `stage:failed`, do not patch by hand;
+- a human pushing to a bot branch marks it `manual:touched`; the bot stops managing
+  it.
+
+## Failure loop
+
+Every failure becomes an artifact:
+
+1. the bot comments with the tail of the log and labels `stage:failed`;
+2. two attempts per issue and three revisions per PR, then a human decides;
+3. the human appends context or `/retry`; the issue stays, the branch is discarded;
+4. recurring failures get `process:lesson`;
+5. the weekly ritual turns lessons into rules, through a pull request to this
+   runbook or to `operating.json`.
 
 ## Seasons
 
-| Season | Focus | Review | Chat | Merged PRs | AI spend |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| build | 180 min | 120 min | 60 min | 10 | $1.00 |
-| maintain | 75 min | 45 min | 30 min | 3 | $0.40 |
+| Season | Focus | Review | Chat | Inbox | Merged PRs | AI spend |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| build | 210 min | 120 min | 45 min | 30 min | 10 | $1.00 |
+| maintain | 120 min | 60 min | 30 min | 15 min | 3 | $0.40 |
 
 Switch seasons explicitly. A maintain week is not a failure; an unstated build
 season is.
 
-## Rituals
-
-| Cadence | Ritual | Output |
-| --- | --- | --- |
-| daily | review the ready queue, merge within the band | 5 to 15 merges |
-| weekly | triage comments, close stale issues, update the band check | queue between 30 and 40 |
-| monthly | restore drill and token rotation | fresh device proven to rebuild in 30 minutes |
-
 ## Anti-patterns
 
-- Keeping a chat as a todo list instead of creating an issue or deleting it.
-- Creating an issue only to avoid deleting a chat.
-- Merging in the same session as generation.
-- Growing a PR to finish an issue faster.
-- Treating an empty queue as success; an empty queue means underuse.
-- Adding a second tracker; comments on issues are part of the same tracker.
+- keeping a chat as a todo list instead of creating a parent issue or deleting it;
+- creating an issue only to avoid deleting a chat;
+- triaging before reviewing;
+- merging in the same session as generation;
+- growing a PR to finish an issue faster;
+- adding global caps where priority and focus already decide;
+- treating an empty queue as success.
 
 ## Related
 
