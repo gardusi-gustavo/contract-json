@@ -187,7 +187,7 @@ never **rewrite or remove**. Repositories are out of scope entirely.
 | Force-push, amend, or rebase a bot branch | never |
 | Open a pull request | allowed |
 | Close a bot-owned pull request | allowed |
-| Merge | human only |
+| Merge | human only; a batch merge needs an explicit, recorded approval |
 | Delete a branch | only through merge auto-delete |
 
 Enforcement is technical, not aspirational:

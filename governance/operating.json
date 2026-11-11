@@ -192,7 +192,8 @@
       "edit": false,
       "delete": false,
       "close": "bot_owned",
-      "merge": "human_only"
+      "merge": "human_only",
+      "merge_batch": "explicit_approval"
     },
     "branches": {
       "create": true,
