@@ -168,6 +168,41 @@ Additional rules:
 - a human pushing to a bot branch marks it `manual:touched`; the bot stops managing
   it.
 
+## Guardrails
+
+An agent may **add** — issues, comments, labels, commits, pull requests — and may
+never **rewrite or remove**. Repositories are out of scope entirely.
+
+| Action | Agent |
+| --- | --- |
+| Create, delete, rename, archive, or re-scope a repository | never |
+| Change settings, rulesets, visibility, or secrets | never |
+| Create an issue | allowed |
+| Comment on an issue or pull request | allowed |
+| Add or remove labels | allowed |
+| Edit an issue or pull request title or body | never |
+| Delete an issue or pull request | never |
+| Transfer an issue to another repository | never |
+| Create a branch and push commits | allowed, append only |
+| Force-push, amend, or rebase a bot branch | never |
+| Open a pull request | allowed |
+| Close a bot-owned pull request | allowed |
+| Merge | human only |
+| Delete a branch | only through merge auto-delete |
+
+Enforcement is technical, not aspirational:
+
+- tokens carry no `administration` permission, so repository creation and deletion
+  are impossible;
+- GitHub App installations use the same restriction;
+- branch protection allows only the human merge identity;
+- a CI check rejects agent scripts containing `gh repo create`, `gh repo delete`,
+  `gh issue edit`, `gh pr edit`, or `--force`.
+
+Limits live in [operating.json](https://github.com/gardusi-gustavo/contract-json/blob/main/governance/operating.json):
+budgets, per-repository queues, one ready plus two drafts, review size and time,
+aging, and the focus scheduler.
+
 ## Failure loop
 
 Every failure becomes an artifact:

@@ -1,5 +1,5 @@
 {
-  "schema": 2,
+  "schema": 3,
   "season": "build",
   "seasons": {
     "build": {
@@ -166,5 +166,46 @@
     "daily": "review first, inbox at the end of the day",
     "weekly": "triage, close stale, report oldest queued issue per repo",
     "monthly": "restore drill, token rotation, prune someday older than 90 days"
+  },
+  "guardrails": {
+    "repositories": {
+      "create": false,
+      "delete": false,
+      "rename": false,
+      "archive": false,
+      "visibility": false,
+      "settings": false
+    },
+    "issues": {
+      "create": true,
+      "comment": true,
+      "label": true,
+      "edit": false,
+      "delete": false,
+      "transfer": false
+    },
+    "pull_requests": {
+      "create": true,
+      "comment": true,
+      "label": true,
+      "push_commits": true,
+      "edit": false,
+      "delete": false,
+      "close": "bot_owned",
+      "merge": "human_only"
+    },
+    "branches": {
+      "create": true,
+      "force_push": false,
+      "delete": "after_merge"
+    },
+    "admin": false,
+    "secrets": false,
+    "enforcement": [
+      "token_scopes",
+      "app_installation",
+      "branch_protection",
+      "ci_forbidden_commands"
+    ]
   }
 }
