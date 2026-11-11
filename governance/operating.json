@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "season": "build",
+  "seasons": {
+    "build": {
+      "focus_min": 180,
+      "review_min": 120,
+      "chat_min": 60,
+      "merged_prs": 10,
+      "ai_usd": 1.0
+    },
+    "maintain": {
+      "focus_min": 75,
+      "review_min": 45,
+      "chat_min": 30,
+      "merged_prs": 3,
+      "ai_usd": 0.4
+    }
+  },
+  "inbox": {
+    "source": "chat",
+    "unit": "one chat = one idea",
+    "targets": [
+      "new_issue",
+      "issue_comment",
+      "adr",
+      "discard"
+    ],
+    "delete_after_capture": true
+  },
+  "budgets": {
+    "ai_usd": {
+      "low": 0.5,
+      "high": 1.5,
+      "target": 1.0,
+      "window": "day"
+    },
+    "review_min": {
+      "low": 60,
+      "high": 180,
+      "target": 120,
+      "window": "day"
+    },
+    "chat_min": {
+      "low": 30,
+      "high": 90,
+      "target": 60,
+      "window": "day"
+    },
+    "focus_min": {
+      "low": 90,
+      "high": 270,
+      "target": 180,
+      "window": "day"
+    },
+    "merged_prs": {
+      "low": 5,
+      "high": 15,
+      "target": 10,
+      "window": "day"
+    },
+    "new_issues": {
+      "low": 5,
+      "high": 15,
+      "target": 10,
+      "window": "day"
+    }
+  },
+  "queues": {
+    "open_issues": {
+      "resume": 30,
+      "pause": 40
+    },
+    "ready_prs": {
+      "low": 5,
+      "high": 15,
+      "target": 10
+    },
+    "per_repo": {
+      "ready": 1,
+      "draft": 1
+    }
+  },
+  "review": {
+    "minutes_per_pr": 12,
+    "cooling_off_hours": 4,
+    "max_files": 4,
+    "max_changed_lines": 250,
+    "max_commits": 5,
+    "checklist": [
+      "correctness",
+      "evidence",
+      "scope",
+      "tests",
+      "rollback"
+    ],
+    "merge_in_same_session": false
+  },
+  "flow": {
+    "readability_gate": true,
+    "required_spec_sections": [
+      "problem",
+      "evidence",
+      "acceptance",
+      "non_goals",
+      "rollback"
+    ],
+    "overflow": "comment_on_existing",
+    "one_pr_one_issue": true
+  },
+  "labels": {
+    "source": "source:chat",
+    "spec_ready": "spec:ready",
+    "parked": "parked"
+  },
+  "rituals": {
+    "daily": "review",
+    "weekly": "triage, close stale, band check",
+    "monthly": "restore drill, token rotation"
+  }
+}
