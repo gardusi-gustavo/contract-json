@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "owner": "gardusi-gustavo",
+  "host": "github.com",
+  "root": "~/github",
+  "layout": "github/<prefix>/<repo>",
+  "source_of_truth": "governance/repos.json",
+  "domains": [
+    {
+      "domain": "contracts",
+      "prefix": "contract",
+      "repos": [
+        "contract-graphql",
+        "contract-json",
+        "contract-openapi",
+        "contract-proto",
+        "contract-sql"
+      ]
+    },
+    {
+      "domain": "dashboards",
+      "prefix": "dashboard",
+      "repos": [
+        "dashboard-devops",
+        "dashboard-lottery",
+        "dashboard-news",
+        "dashboard-stocks",
+        "dashboard-wiki"
+      ]
+    },
+    {
+      "domain": "databases",
+      "prefix": "database",
+      "repos": [
+        "database-devops",
+        "database-lottery",
+        "database-news",
+        "database-stocks",
+        "database-wiki"
+      ]
+    },
+    {
+      "domain": "games",
+      "prefix": "game",
+      "repos": [
+        "game-crosswords",
+        "game-logic-grid",
+        "game-sudoku"
+      ]
+    },
+    {
+      "domain": "packages",
+      "prefix": "package",
+      "repos": [
+        "package-cpp",
+        "package-cs",
+        "package-docker",
+        "package-elixir",
+        "package-go",
+        "package-java",
+        "package-kotlin",
+        "package-lua",
+        "package-md",
+        "package-php",
+        "package-python",
+        "package-rb",
+        "package-rs",
+        "package-scala",
+        "package-sh",
+        "package-swift",
+        "package-terraform",
+        "package-ts",
+        "package-ui",
+        "package-zig"
+      ]
+    },
+    {
+      "domain": "workflows",
+      "prefix": "workflow",
+      "repos": [
+        "workflow-event",
+        "workflow-manual",
+        "workflow-scheduled"
+      ]
+    },
+    {
+      "domain": "github",
+      "prefix": "meta",
+      "repos": [
+        ".github",
+        "gardusi-gustavo"
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "repo": "gardusi-gustavo/private",
+      "auth": "codespaces",
+      "reason": "Manual updates via GitHub Codespaces only; no local clone and no personal access token"
+    }
+  ],
+  "auth": {
+    "mode": "fine-grained-personal-access-token-per-domain",
+    "token_name": "<domain>",
+    "store": "~/.config/gh/domains/<domain>/hosts.yml",
+    "registry": "~/.config/gh/registry.json",
+    "required_permissions": [
+      "contents:write",
+      "pull_requests:write",
+      "issues:write",
+      "workflows:write",
+      "metadata:read"
+    ],
+    "forbidden_permissions": [
+      "administration"
+    ],
+    "rotation_days": 30,
+    "never_grant": [
+      "repository deletion",
+      "organization administration"
+    ]
+  }
+}
