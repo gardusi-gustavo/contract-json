@@ -509,13 +509,13 @@
   "meta": [
     {
       "group": "gardusi-gustavo",
-      "name": ".github",
+      "name": "package-yml",
       "section": 0,
       "visibility": "public",
       "platform": [
         "github"
       ],
-      "github": "gardusi-gustavo/.github",
+      "github": "gardusi-gustavo/package-yml",
       "git_path": null
     },
     {

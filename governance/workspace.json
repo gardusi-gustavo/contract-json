@@ -87,7 +87,7 @@
       "domain": "github",
       "prefix": "meta",
       "repos": [
-        ".github",
+        "package-yml",
         "gardusi-gustavo"
       ]
     }
