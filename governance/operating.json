@@ -165,7 +165,7 @@
   "rituals": {
     "daily": "review first, inbox at the end of the day",
     "weekly": "triage, close stale, report oldest queued issue per repo",
-    "monthly": "restore drill, token rotation, prune someday older than 90 days"
+    "monthly": "restore drill, prune someday older than 90 days"
   },
   "guardrails": {
     "repositories": {
@@ -203,8 +203,8 @@
     "admin": false,
     "secrets": false,
     "enforcement": [
-      "token_scopes",
-      "app_installation",
+      "github_token_permissions",
+      "ssh_operator",
       "branch_protection",
       "ci_forbidden_commands"
     ]
