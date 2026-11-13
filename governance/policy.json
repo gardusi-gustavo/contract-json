@@ -201,6 +201,7 @@
     "gardusi-gustavo/package-zig",
     "gardusi-gustavo/workflow-event",
     "gardusi-gustavo/workflow-manual",
-    "gardusi-gustavo/workflow-scheduled"
+    "gardusi-gustavo/workflow-scheduled",
+    "gardusi-gustavo/contract-wit"
   ]
 }

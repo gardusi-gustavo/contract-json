@@ -14,7 +14,8 @@
         "contract-json",
         "contract-openapi",
         "contract-proto",
-        "contract-sql"
+        "contract-sql",
+        "contract-wit"
       ]
     },
     {
@@ -71,7 +72,8 @@
         "package-terraform",
         "package-ts",
         "package-ui",
-        "package-zig"
+        "package-zig",
+        "package-wat"
       ]
     },
     {
