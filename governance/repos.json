@@ -504,6 +504,30 @@
       ],
       "github": "gardusi-gustavo/database-wiki",
       "gitea_archive": null
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "contract-wit",
+      "git_path": null,
+      "section": 1,
+      "visibility": "public",
+      "platform": [
+        "github"
+      ],
+      "github": "gardusi-gustavo/contract-wit",
+      "gitea_archive": null
+    },
+    {
+      "group": "gardusi-gustavo",
+      "name": "package-wat",
+      "git_path": null,
+      "section": 2,
+      "visibility": "public",
+      "platform": [
+        "github"
+      ],
+      "github": "gardusi-gustavo/package-wat",
+      "gitea_archive": null
     }
   ],
   "meta": [
@@ -530,7 +554,7 @@
       "git_path": null
     }
   ],
-  "total": 44,
+  "total": 46,
   "retired": [
     {
       "group": "gardusi-gustavo",

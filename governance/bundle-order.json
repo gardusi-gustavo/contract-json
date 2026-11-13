@@ -15,7 +15,8 @@
         "gardusi-gustavo/contract-proto",
         "gardusi-gustavo/contract-graphql",
         "gardusi-gustavo/contract-openapi",
-        "gardusi-gustavo/contract-sql"
+        "gardusi-gustavo/contract-sql",
+        "gardusi-gustavo/contract-wit"
       ]
     },
     {
@@ -40,7 +41,8 @@
         "gardusi-gustavo/package-swift",
         "gardusi-gustavo/package-scala",
         "gardusi-gustavo/package-md",
-        "gardusi-gustavo/package-lua"
+        "gardusi-gustavo/package-lua",
+        "gardusi-gustavo/package-wat"
       ]
     },
     {
