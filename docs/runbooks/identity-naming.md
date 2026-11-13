@@ -28,9 +28,10 @@ only accepts `.github/workflows/<file>.yml`. The folder structure lives in
 | Repository | Axis | Holds |
 | --- | --- | --- |
 | `package-yml` | templates and reusable logic | `event-*`, `experimental-*` |
-| `workflow-event` | event-triggered pipelines | ingestion docs |
-| `workflow-scheduled` | time-triggered pipelines | cron docs |
-| `workflow-manual` | retired ChatOps | archive candidate |
+
+`workflow-event`, `workflow-manual`, and `workflow-scheduled` are retired. Their
+active content moved to `package-yml`, the database repositories, or the
+governance records.
 
 Job names live in workflows and labels, not in credentials. There are no bot
 accounts and no bot tokens.
