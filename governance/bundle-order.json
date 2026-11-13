@@ -46,14 +46,6 @@
       ]
     },
     {
-      "name": "workflows",
-      "repos": [
-        "gardusi-gustavo/workflow-event",
-        "gardusi-gustavo/workflow-scheduled",
-        "gardusi-gustavo/workflow-manual"
-      ]
-    },
-    {
       "name": "databases",
       "repos": [
         "gardusi-gustavo/database-lottery",

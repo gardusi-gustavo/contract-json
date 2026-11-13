@@ -77,15 +77,6 @@
       ]
     },
     {
-      "domain": "workflows",
-      "prefix": "workflow",
-      "repos": [
-        "workflow-event",
-        "workflow-manual",
-        "workflow-scheduled"
-      ]
-    },
-    {
       "domain": "github",
       "prefix": "meta",
       "repos": [
