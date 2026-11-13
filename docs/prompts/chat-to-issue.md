@@ -63,21 +63,16 @@ Rules:
 - at most 8 children; more means the chat was a project.
 ```
 
-## Commands
+## Create the issues
 
-```bash
-# create the parent issue in the profile repository
-python3 scripts/inbox.py --input parent.json
+There is no local API credential. Create the issues in the GitHub UI:
 
-# create child issues and link them to the parent
-python3 scripts/inbox.py --input children.json --parent 42
+1. Open a parent issue in the profile repository and paste the summary fields.
+2. Apply `stage:captured`, `priority:*`, and `kind:*` labels where they exist.
+3. Open one child issue per repository and outcome.
+4. Delete the chat.
 
-# preview without writing anything
-python3 scripts/inbox.py --input parent.json --dry-run
-
-# discard a chat that produced no action
-python3 scripts/inbox.py --input parent.json --discard
-```
+Nothing is dispatched automatically.
 
 ## Stages
 
@@ -95,7 +90,7 @@ python3 scripts/inbox.py --input parent.json --discard
 
 ## Queue policy
 
-`inbox.py` reads `governance/operating.json` and applies per-repository limits:
+The queue policy is applied by hand:
 
 | Target | Resume | Pause |
 | --- | ---: | ---: |
@@ -103,16 +98,14 @@ python3 scripts/inbox.py --input parent.json --discard
 | Work repository | 15 | 20 |
 
 When a work repository is at its cap, fan-out is deferred: the parent stays
-`stage:triaged` with a comment `deferred: repo at cap`. Nothing is lost and no
-global cap is involved.
+`stage:triaged` with a comment `deferred: repo at cap`. Nothing is lost.
 
 ## Labels
 
 `source:chat`, `kind:<kind>`, `size:<S|M|L>`, `domain:<prefix>`,
 `priority:<P0-P3>`, and later `spec:ready`.
 
-Labels are applied only when they already exist in the target repository;
-`inbox.py` skips the rest rather than failing.
+Labels are applied only when they already exist in the target repository.
 
 ## Related
 

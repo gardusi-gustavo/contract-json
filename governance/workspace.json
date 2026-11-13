@@ -77,15 +77,6 @@
       ]
     },
     {
-      "domain": "workflows",
-      "prefix": "workflow",
-      "repos": [
-        "workflow-event",
-        "workflow-manual",
-        "workflow-scheduled"
-      ]
-    },
-    {
       "domain": "github",
       "prefix": "meta",
       "repos": [
@@ -97,27 +88,19 @@
   "excluded": [
     {
       "repo": "gardusi-gustavo/private",
-      "auth": "codespaces",
-      "reason": "Manual updates via GitHub Codespaces only; no local clone and no personal access token"
+      "auth": "operator_ssh_only",
+      "reason": "Operator-only via SSH; no automation, no workflow access"
     }
   ],
   "auth": {
-    "mode": "fine-grained-personal-access-token-per-domain",
-    "token_name": "<domain>",
-    "store": "~/.config/gh/domains/<domain>/hosts.yml",
-    "registry": "~/.config/gh/registry.json",
-    "required_permissions": [
-      "contents:write",
-      "pull_requests:write",
-      "issues:write",
-      "workflows:write",
-      "metadata:read"
-    ],
-    "forbidden_permissions": [
-      "administration"
-    ],
-    "rotation_days": 30,
+    "mode": "ssh-operator-and-github-token",
+    "operator": "~/.ssh/id_ed25519_github",
+    "workflow_token": "GITHUB_TOKEN",
+    "scope": "per repository",
+    "personal_access_tokens": "none",
+    "github_apps": "none",
     "never_grant": [
+      "administration",
       "repository deletion",
       "organization administration"
     ]

@@ -1,0 +1,14 @@
+name: event-pull-request
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    if: github.event.pull_request.draft == false
+    uses: gardusi-gustavo/package-yml/.github/workflows/event-pull-request.yml@release/v1

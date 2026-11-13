@@ -192,7 +192,7 @@ never **rewrite or remove**. Repositories are out of scope entirely.
 
 Enforcement is technical, not aspirational:
 
-- tokens carry no `administration` permission, so repository creation and deletion
+- the built-in `GITHUB_TOKEN` carries no `administration` permission, so repository creation and deletion
   are impossible;
 - GitHub App installations use the same restriction;
 - branch protection allows only the human merge identity;
