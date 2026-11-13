@@ -12,7 +12,6 @@ operator and the built-in `GITHUB_TOKEN` for workflows.
 ├── database/     database-devops, database-lottery, database-news, database-stocks, database-wiki
 ├── game/         game-crosswords, game-logic-grid, game-sudoku
 ├── package/      package-cpp … package-zig (21 repositories)
-├── workflow/     workflow-event, workflow-manual, workflow-scheduled
 ├── meta/         package-yml, gardusi-gustavo
 └── private/      optional, operator-only (SSH)
 ```

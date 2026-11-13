@@ -67,7 +67,7 @@ Host github.com
 ## Workspace
 
 ```bash
-mkdir -p ~/github/{contract,dashboard,database,game,package,workflow,meta}
+mkdir -p ~/github/{contract,dashboard,database,game,package,meta}
 git clone git@github.com:gardusi-gustavo/package-yml.git ~/github/meta/package-yml
 ```
 
